@@ -6,12 +6,15 @@ body {
   
   .container {
     display: flex;
-    height: 100vh;
+    height: 88vh;
   }
   
   .todo {
+    border-style: ridge;
+    border-radius: 20px;
+    border-width: 5px;
     flex-grow: 1;
-    background-color: #f2f2f2;
+    background-color: rgb(247, 247, 247);
     padding: 20px;
   }
   

@@ -25,8 +25,12 @@ addItemBtn.addEventListener("click", function() {
   });
 });
 
+pressed = false;
+
 newItemInput.addEventListener("keypress", function(event) {
   if (event.key === "Enter") {
-    addItemBtn.click(); 
+    addItemBtn.click();
   }
 });
+
+// When you press enter for the "add a new item" box, it reloads the page instead of adding - Baron
