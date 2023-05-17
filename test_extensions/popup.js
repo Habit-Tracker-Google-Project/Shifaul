@@ -1,4 +1,4 @@
-console.log("This is a popup!")
+//console.log("This is a popup!")
 
 chrome.storage.session.get(null, function(items) {
    const div = document.getElementById("splits");
