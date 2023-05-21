@@ -24,6 +24,7 @@ chrome.tabs.onActivated.addListener(async function(activeInfo) {
 
 });
 
+//think now it's right
 chrome.action.onClicked.addListener(function (tab) {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     const activeTab = tabs[0];
