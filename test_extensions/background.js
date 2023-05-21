@@ -18,9 +18,21 @@ chrome.tabs.onActivated.addListener(async function(activeInfo) {
     // Storage ----------
 
     storeCountInSession(currentWebsite.hostname, elapsedTimeSeconds); // stores the info assigned as (hostname : time)
+    storeCountInDisk(currentWebsite.hostname, elapsedTimeSeconds); // stores the info assigned as (hostname : time)
     currentWebsite = new URL (tab.url);
   }
 
+});
+
+chrome.action.onClicked.addListener(function (tab) {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    const activeTab = tabs[0];
+    if (activeTab.url === "splits://habittrackers") {
+      chrome.tabs.executeScript(activeTab.id, {
+        file: 'content.js'
+      });
+    }
+  });
 });
 
 
@@ -41,6 +53,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     // Storage ----------
 
     storeCountInSession(currentWebsite.hostname, elapsedTimeSeconds); // stores the info assigned as (hostname : time)
+    storeCountInDisk(currentWebsite.hostname, elapsedTimeSeconds); // stores the info assigned as (hostname : time)
     currentWebsite = new URL (tab.url);
   }   
 });
