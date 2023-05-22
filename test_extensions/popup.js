@@ -29,3 +29,26 @@ chrome.storage.session.get(null, function(items) {
 
    div.append(table);
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const splitsDiv = document.getElementById("splits");
+  const todolistButton = document.getElementById("todolist");
+  const timetrackerButton = document.getElementById("timetracker");
+
+  todolistButton.addEventListener("click", function () {
+    splitsDiv.innerHTML = "";
+    const todoIframe = document.createElement("iframe");
+    todoIframe.src = chrome.runtime.getURL("todo.html");
+    splitsDiv.appendChild(todoIframe);
+  });
+
+  timetrackerButton.addEventListener("click", function () {
+   splitsDiv.innerHTML = "";
+   const todoIframe = document.createElement("iframe");
+   todoIframe.src = chrome.runtime.getURL("popup.html");
+
+   splitsDiv.appendChild(todoIframe);
+ });
+ 
+ 
+});

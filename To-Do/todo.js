@@ -1,13 +1,14 @@
+const addItemForm = document.getElementById("add-item-form");
 const newItemInput = document.getElementById("new-item-input");
-const addItemBtn = document.getElementById("add-item-btn");
 const toDoList = document.getElementById("to-do-list");
 let list = localStorage.getItem('list') ? JSON.parse(localStorage.getItem('list')) : [];
 
-addItemBtn.addEventListener("click", function() {
-  const newItemText = newItemInput.value;
+addItemForm.addEventListener("submit", function(e) {
+  e.preventDefault();
+  const newItemText = newItemInput.value.trim();
 
   if (newItemText === "") {
-    return; 
+    return;
   }
 
   list.push(newItemText);
@@ -19,20 +20,19 @@ addItemBtn.addEventListener("click", function() {
   `;
 
   toDoList.appendChild(newItem);
-
   newItemInput.value = "";
 
   const deleteBtn = newItem.querySelector("button");
   deleteBtn.addEventListener("click", function() {
     newItem.remove();
+    list = list.filter(item => item !== newItemText);
+    saveListToLocalStorage();
   });
 
-  localStorage.setItem('list', JSON.stringify(list));
+  saveListToLocalStorage();
 });
 
-pressed = false;
-
-function load() {
+function loadList() {
   for (let i = 0; i < list.length; i++) {
     const newItemText = list[i];
 
@@ -44,14 +44,17 @@ function load() {
 
     toDoList.appendChild(newItem);
 
-    newItemInput.value = "";
-
     const deleteBtn = newItem.querySelector("button");
     deleteBtn.addEventListener("click", function() {
       newItem.remove();
+      list = list.filter(item => item !== newItemText);
+      saveListToLocalStorage();
     });
   }
 }
 
-load();
-// When you press enter for the "add a new item" box, it reloads the page instead of adding - Baron
+function saveListToLocalStorage() {
+  localStorage.setItem('list', JSON.stringify(list));
+}
+
+loadList();
