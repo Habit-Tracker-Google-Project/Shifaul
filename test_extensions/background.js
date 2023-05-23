@@ -1,4 +1,3 @@
-
 let startTime = Date.now();
 let currentWebsite = new URL ("http://www.default.com");
 
@@ -22,18 +21,6 @@ chrome.tabs.onActivated.addListener(async function(activeInfo) {
     currentWebsite = new URL (tab.url);
   }
 
-});
-
-//think now it's right
-chrome.action.onClicked.addListener(function (tab) {
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    const activeTab = tabs[0];
-    if (activeTab.url === "splits://habittrackers") {
-      chrome.tabs.executeScript(activeTab.id, {
-        file: 'content.js'
-      });
-    }
-  });
 });
 
 
@@ -107,4 +94,3 @@ function resetStorage() {
       console.log(result);
   });
 }
-
