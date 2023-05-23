@@ -15,11 +15,6 @@
   "background": {
     "service_worker": "background.js",
     "type": "module"
-  },
-  "content_scripts": [
-    {
-      "matches": [""],
-      "js": ["content-script.js"]
-    }
-  ]
+  }
+  
 }
