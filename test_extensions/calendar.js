@@ -135,7 +135,7 @@ function initButtons() { // adds eventlisteners to the back and next buttons
   document.getElementById('closeButton').addEventListener('click', closeModal);
 }
 
-initButtons();
 load();
+initButtons();
 
 // I used this tutorial - > https://www.youtube.com/watch?v=m9OSBJaQTlM
