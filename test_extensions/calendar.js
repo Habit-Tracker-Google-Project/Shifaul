@@ -132,7 +132,9 @@ function initButtons() { // adds eventlisteners to the back and next buttons
 
   document.getElementById('deleteButton').addEventListener('click', deleteEvent);
 
-  document.getElementById('closeButton').addEventListener('click', closeModal);
+  if (document.getElementById('closeButton')){
+    document.getElementById('closeButton').addEventListener('click', closeModal);
+  }
 }
 
 load();
