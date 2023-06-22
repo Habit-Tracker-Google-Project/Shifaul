@@ -9,6 +9,24 @@
 #header button {
   background-color:#92a1d1;
 }
+
+#nextButton {
+  position: relative;
+  right: 15px;
+}
+
+#backButton {
+  position: relative;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  right: 10px;
+}
+
+#nextButton:hover, #backButton:hover {
+  background-color: #6573a1;
+}
+
 #container {
   width: 770px;
 }

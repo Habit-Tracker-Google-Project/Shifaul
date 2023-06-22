@@ -1,6 +1,11 @@
 let startTime = Date.now();
 let currentWebsite = new URL ("http://www.default.com");
 
+let urls = [];
+let times = [];
+
+getData();
+
 chrome.tabs.onActivated.addListener(async function(activeInfo) {
 
   const tab = await chrome.tabs.get(activeInfo.tabId);
@@ -18,15 +23,14 @@ chrome.tabs.onActivated.addListener(async function(activeInfo) {
 
     storeCountInSession(currentWebsite.hostname, elapsedTimeSeconds); // stores the info assigned as (hostname : time)
     storeInDisk(currentWebsite.hostname, elapsedTimeSeconds);
-    currentWebsite = new URL (tab.url);
-    console.log(currentWebsite);
+    updateData(currentWebsite.hostname, elapsedTimeSeconds);
+    storeArrays();
 
-    if (tab.url === "https://habit-tracker-google-project.github.io/HabitTracker/HabitTracker.html"){
-      chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        files: ["content-script.js"]
-      })
-    } 
+    console.log(urls);
+    console.log(times);
+    
+    currentWebsite = new URL (tab.url);
+    //console.log(currentWebsite);
 
   }
 
@@ -51,15 +55,15 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 
     storeCountInSession(currentWebsite.hostname, elapsedTimeSeconds); // stores the info assigned as (hostname : time)
     storeInDisk(currentWebsite.hostname, elapsedTimeSeconds);
-    currentWebsite = new URL (tab.url);
-    console.log(currentWebsite);
+    updateData(currentWebsite.hostname, elapsedTimeSeconds);
+    storeArrays();
 
-    if (tab.url === "https://habit-tracker-google-project.github.io/HabitTracker/HabitTracker.html"){
-      chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        files: ["content-script.js"]
-      })
-    } 
+    console.log(urls);
+    console.log(times);
+
+    currentWebsite = new URL (tab.url);
+    //console.log(currentWebsite);
+
   }   
 });
 
@@ -111,3 +115,51 @@ function resetStorage() {
       console.log(result);
   });
 }
+
+function updateData(taburl, time){
+  if (indexOf(urls, taburl) >= 0){
+    const index = indexOf(urls, taburl);
+    times[index] += time;
+  } else {
+    push(urls, taburl);
+    push(times, time);
+  }
+}
+
+function getData(){
+  chrome.storage.local.get('urls').then((result) => {
+    console.log(result);
+    if (result !== undefined) {
+        urls = Object.values(result.urls);
+    }
+  });
+
+  chrome.storage.local.get('times').then((result) => {
+    console.log(result);
+    if (result !== undefined) {
+        times = Object.values(result.times);
+    }
+  });
+}
+
+function storeArrays(){
+  chrome.storage.local.set({ 'urls': urls });
+  chrome.storage.local.set({ 'times': times });
+}
+
+function indexOf(arr, target){
+  for (let i = 0; i < Object.keys(arr).length; i++){
+    if (target === arr[i]){
+      return i;
+    }
+  }
+  return -1;
+}
+
+function push(arr, element){
+  const length = Object.keys(arr).length;
+  console.log(length);
+  arr[length] = element;
+}
+
+// BIG REMINDER: ARRAY IS AN OBJECT INSIDE OF JAVASCRIPT, NOT A DATA STRUCTURE WHICH MEANS IT DOESNT HAVE BUILT IN FUNCTIONS NOR THING LIKE ARRAY.LENGTH
